@@ -1,0 +1,38 @@
+.avatar{
+    width: 50px;
+}
+
+.activeTab{
+    font-weight: bold;
+    background: white;
+}
+
+.tab{
+    cursor: pointer;
+}
+
+.cell{
+    border: 1px solid white;
+    border-radius: 5px;
+    min-width: 25px;
+    padding: 5px;
+    margin-left: 1px;
+    margin-right: 1px;
+    display: inline-block;
+    text-align: center;
+    user-select: none;
+}
+
+.cell .activeCell {
+    background: white;
+}
+
+.arrowBtn{
+    height: 38px;
+    width: 38px;
+    user-select: none;
+}
+
+.left{
+
+}

@@ -1,0 +1,9 @@
+.error {
+    display: inline-flex;
+    border: 2px solid darkred;
+}
+
+.errorText{
+    color: darkred;
+    font-weight: bold;
+}
