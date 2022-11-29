@@ -1,4 +1,5 @@
 import {axiosFollow, axiosGetUsers, axiosUnfollow} from "../api/api";
+import {ProfileUserPhotosType} from "./profileReducer";
 
 const FOLLOWED = "FOLLOWED";
 const UNFOLLOWED = "UNFOLLOWED";
@@ -10,43 +11,26 @@ const SET_FRIENDS = "SET_FRIENDS";
 const SET_FOLLOWING_IN_PROGRESS = "SET_FOLLOWING_IN_PROGRESS";
 
 
+type UserDataType = {
+    id: number,
+    name: string,
+    status: string,
+    photos: ProfileUserPhotosType
+}
+
 let initState = {
-    // usersData: [
-    //     {
-    //         id: 1,
-    //         followed: true,
-    //         fullName: "Dima",
-    //         status: "I am OK",
-    //         location: {city: "Mykolaiv", country: "Ukraine"},
-    //         photoUrl: "https://cdn-icons-png.flaticon.com/512/236/236831.png"
-    //     },
-    //     {
-    //         id: 2,
-    //         followed: false,
-    //         fullName: "Lina",
-    //         status: "I am Fine",
-    //         location: {city: "Odessa", country: "Ukraine"},
-    //         photoUrl: "https://cdn-icons-png.flaticon.com/512/236/236831.png"
-    //     },
-    //     {
-    //         id: 3,
-    //         followed: true,
-    //         fullName: "Rita",
-    //         status: "I am Good",
-    //         location: {city: "Kiev", country: "Ukraine"},
-    //         photoUrl: "https://cdn-icons-png.flaticon.com/512/236/236831.png"
-    //     }
-    // ]
-    usersData: [],
+    usersData: [] as Array<UserDataType>,
     totalUsersCount: 0,
     pageSize: 5,
     currentPage: 1,
     isFetching: false,
     friendsData: [],
-    followingElements: []
+    followingElements: [] as Array<number>
 }
 
-const usersReducer = (state = initState, action) => {
+type InitStateType = typeof initState
+
+const usersReducer = (state = initState, action: any): InitStateType => {
     switch (action.type) {
         case FOLLOWED:
             return {
@@ -99,40 +83,76 @@ const usersReducer = (state = initState, action) => {
     }
 }
 
-export const followedActionCreator = (userId) => {
+type FollowedActionType = {
+    type: typeof FOLLOWED
+    userId: number
+}
+export const followedActionCreator = (userId: number) : FollowedActionType => {
     return {type: FOLLOWED, userId: userId}
 }
 
-export const unfollowedActionCreator = (userId) => {
+type UnfollowedActionType = {
+    type: typeof UNFOLLOWED
+    userId: number
+}
+export const unfollowedActionCreator = (userId: number): UnfollowedActionType => {
     return {type: UNFOLLOWED, userId: userId}
 }
 
-export const setUsersActionCreator = (usersData) => {
+type SetUsersActionType = {
+    type: typeof SET_USERS
+    usersData: Array<UserDataType>
+}
+export const setUsersActionCreator = (usersData: Array<UserDataType>) : SetUsersActionType => {
     return {type: SET_USERS, usersData: usersData}
 }
 
-export const setCurrentPageActionCreator = (currentPage) => {
+type SetCurrentPageActionType = {
+    type: typeof SET_CURRENT_PAGE
+    currentPage: number
+}
+export const setCurrentPageActionCreator = (currentPage: number) : SetCurrentPageActionType => {
     return {type: SET_CURRENT_PAGE, currentPage: currentPage}
 }
 
-export const setUsersTotalCountActionCreator = (totalCount) => {
+type SetUsersTotalCountActionType = {
+    type: typeof SET_USERS_TOTAL_COUNT
+    totalCount: number
+}
+export const setUsersTotalCountActionCreator = (totalCount: number) : SetUsersTotalCountActionType => {
     return {type: SET_USERS_TOTAL_COUNT, totalCount: totalCount}
 }
-export const toggleFetchingActionCreator = (isFetching) => {
+
+type ToggleFetchingActionType = {
+    type: typeof TOGGLE_FETCHING
+    isFetching: boolean
+}
+export const toggleFetchingActionCreator = (isFetching: boolean): ToggleFetchingActionType => {
     return {type: TOGGLE_FETCHING, isFetching: isFetching}
 }
-export const setFriendsActionCreator = (friendsData) => {
+
+type SetFriendsActionType = {
+    type: typeof SET_FRIENDS
+    friendsData: any
+}
+export const setFriendsActionCreator = (friendsData : any): SetFriendsActionType => {
     return {type: SET_FRIENDS, friendsData: friendsData}
 }
-export const setFollowingInProgressActionCreator = (followingStatus, userId) => {
+
+type SetFollowingInProgressActionType = {
+    type: typeof SET_FOLLOWING_IN_PROGRESS
+    followingStatus: boolean
+    userId: number
+}
+export const setFollowingInProgressActionCreator = (followingStatus: boolean, userId: number) : SetFollowingInProgressActionType => {
     return {type: SET_FOLLOWING_IN_PROGRESS, followingStatus: followingStatus, userId: userId}
 }
 
 let cp = 1
 let users = []
 
-export const getUsersThunkCreator = (pageSize, currentPage) => {
-    return (dispatch) => {
+export const getUsersThunkCreator = (pageSize: number, currentPage: number) => {
+    return (dispatch: any) => {
         dispatch(toggleFetchingActionCreator(true))
 
         axiosGetUsers(pageSize, currentPage).then(data => {
@@ -162,8 +182,8 @@ export const getUsersThunkCreator = (pageSize, currentPage) => {
     }
 }
 
-export const followUserThunkCreator = (userId) => {
-    return (dispatch) => {
+export const followUserThunkCreator = (userId: number) => {
+    return (dispatch: any) => {
         dispatch(setFollowingInProgressActionCreator(true, userId))
         axiosFollow(userId).then(data => {
             if(data.resultCode === 0)
@@ -173,8 +193,8 @@ export const followUserThunkCreator = (userId) => {
     }
 }
 
-export const unfollowUserThunkCreator = (userId) => {
-    return (dispatch) => {
+export const unfollowUserThunkCreator = (userId: number) => {
+    return (dispatch: any) => {
         dispatch(setFollowingInProgressActionCreator(true, userId))
         axiosUnfollow(userId).then(data => {
             if(data.resultCode === 0)

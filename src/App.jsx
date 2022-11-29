@@ -1,7 +1,7 @@
 import React from "react";
 import './App.css';
 import Sidebar from './components/Sidebar/Sidebar';
-import {HashRouter, BrowserRouter, Route, Routes} from "react-router-dom";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 //import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
@@ -26,7 +26,7 @@ class App extends Component {
         if (!this.props.initialized) return <Preloader/>
 
         return (
-            <HashRouter>
+            <BrowserRouter>
                 <div className="App">
                     <HeaderContainer/>
                     <Sidebar/>
@@ -43,7 +43,7 @@ class App extends Component {
                         </Routes>
                     </div>
                 </div>
-            </HashRouter>
+            </BrowserRouter>
         );
     }
 }

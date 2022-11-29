@@ -11,23 +11,23 @@ let initState : InitStateType = {
     initialized: false
 }
 
-const appReducer = (state = initState, action : any) => {
+const appReducer = (state = initState, action : any) : InitStateType => {
     switch (action.type) {
         case INITIALIZED_SUCCESS:
             return {
                 ...state,
-                initialized: true
+                initialized: true,
             }
-        // case FAKE:
-        //     return {
-        //         ...state
-        //     }
         default:
             return state
     }
 }
 
-export const initSuccessActionCreator = () => {
+type initSuccessActionType = {
+    type: typeof INITIALIZED_SUCCESS
+}
+
+export const initSuccessActionCreator = (): initSuccessActionType => {
     return {type: INITIALIZED_SUCCESS}
 }
 

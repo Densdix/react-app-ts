@@ -5,7 +5,15 @@ const SET_USER_DATA = "SET_USER_DATA";
 const RESET_USER_DATA = "RESET_USER_DATA";
 const SET_CAPTCHA_URL = "SET_CAPTCHA_URL";
 
-let initState = {
+type InitStateType = {
+    userId: number | null,
+    email: string | null,
+    login: string | null,
+    isAuth: false,
+    captchaUrl: string | null
+}
+
+let initState: InitStateType = {
     userId: null,
     email: null,
     login: null,
@@ -13,7 +21,7 @@ let initState = {
     captchaUrl: null
 }
 
-const authReducer = (state = initState, action) => {
+const authReducer = (state = initState, action: any): InitStateType => {
     switch (action.type) {
         case SET_USER_DATA:
             return {
@@ -36,27 +44,40 @@ const authReducer = (state = initState, action) => {
     }
 }
 
-export const setUserDataActionCreator = (userId, email, login, isAuth) => {
+type UserDataType = {
+    userId: number,
+    email: string,
+    login: string,
+    isAuth: boolean
+}
+type SetUserDataActionType = {
+    type: typeof SET_USER_DATA,
+    data: UserDataType
+}
+export const setUserDataActionCreator = (userId: number, email: string, login: string, isAuth: boolean): SetUserDataActionType => {
     return {type: SET_USER_DATA, data: {userId, email, login, isAuth}}
 }
 
-export const resetUserDataActionCreator = () => {
+type ResetUserDataActionType = {
+    type: typeof RESET_USER_DATA
+}
+export const resetUserDataActionCreator = (): ResetUserDataActionType => {
     return {type: RESET_USER_DATA}
 }
 
 export const setCurrentUserThunkCreator = () => {
-    return (dispatch) => {
+    return (dispatch: any) => {
         return axiosGetCurrentUserData().then(data => {
             if (data.resultCode === 0) {
                 let {id, email, login} = data.data
-                dispatch(setUserDataActionCreator(id, email, login))
+                dispatch(setUserDataActionCreator(id, email, login, true))
             }
         })
     }
 }
 
-export const userSignInThunkCreator = (formData) => {
-    return (dispatch) => {
+export const userSignInThunkCreator = (formData: any) => {
+    return (dispatch: any) => {
         axiosPostSignIn(formData).then(response => {
             if (response.resultCode === 0) {
                 console.log("success", response)
@@ -72,7 +93,7 @@ export const userSignInThunkCreator = (formData) => {
 }
 
 export const userSignOutThunkCreator = () => {
-    return (dispatch) => {
+    return (dispatch: any) => {
         axiosPostSignOut().then(response => {
             if (response.resultCode === 0) {
                 dispatch(resetUserDataActionCreator())
@@ -81,12 +102,16 @@ export const userSignOutThunkCreator = () => {
     }
 }
 
-export const setCaptchaUrlActionCreator = (captchaUrl) => {
+type setCaptchaUrlActionType = {
+    type: typeof SET_CAPTCHA_URL
+    captchaUrl: string
+}
+export const setCaptchaUrlActionCreator = (captchaUrl: string): setCaptchaUrlActionType => {
     return {type: SET_CAPTCHA_URL, captchaUrl: captchaUrl}
 }
 
 export const getCaptchaThunkCreator = () => {
-    return (dispatch) => {
+    return (dispatch: any) => {
         axiosGetCaptcha().then(data => {
             dispatch(setCaptchaUrlActionCreator(data.url))
         })

@@ -1,5 +1,5 @@
 import React from "react";
-import {ADD_MESSAGE, addMessageActionCreator, UPDATE_NEW_MESSAGE_TEXT} from "../../redux/dialogReducer";
+import {addMessageActionCreator} from "../../redux/dialogReducer";
 import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
@@ -30,16 +30,16 @@ let mapStateToProps = (state) => {
     }
 }
 
-let mapDispatchToProps = (dispatch) => {
-    return {
-        onMessageChange: (text) => {
-            dispatch({type: UPDATE_NEW_MESSAGE_TEXT, newText: text})
-        },
-        addMessage: () => {
-            dispatch({type: ADD_MESSAGE})
-        }
-    }
-}
+// let mapDispatchToProps = (dispatch) => {
+//     return {
+//         onMessageChange: (text) => {
+//             dispatch({type: UPDATE_NEW_MESSAGE_TEXT, newText: text})
+//         },
+//         addMessage: () => {
+//             dispatch({type: ADD_MESSAGE})
+//         }
+//     }
+// }
 
 const DialogsContainer = compose(
     connect(mapStateToProps, {
