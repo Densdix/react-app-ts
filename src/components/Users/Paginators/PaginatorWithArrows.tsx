@@ -1,17 +1,23 @@
 import React from "react";
 import s from "../Users.module.css";
 
-import leftArrow from "./images/icons8-налево-96.png"
-import rightArrow from "./images/icons8-направо-96.png"
-import doubleLeftArrow from "./images/icons8-двойная-стрелка-влево-96.png"
-import doubleRightArrow from "./images/icons8-двойная-стрелка-вправо-96.png"
+// import leftArrow from "./images/icons8-налево-96.png"
+// import rightArrow from "./images/icons8-направо-96.png"
+// import doubleLeftArrow from "./images/icons8-двойная-стрелка-влево-96.png"
+// import doubleRightArrow from "./images/icons8-двойная-стрелка-вправо-96.png"
 
-const PaginatorWithArrows = ({pages, currentPage, updateCurrentPage}) => {
+type PropsType = {
+    pages: Array<number>
+    currentPage: number
+    updateCurrentPage: (pageNumber: number) => void
+}
 
-    let curP = currentPage
-    let curPF = ((curP - 5) < 0) ? 0 : ((curP + 5) > pages.length) ? pages.length - 10 : curP - 5 //4323 - 5 = 4318
-    let curPL = ((curP - 5) < 0) ? 10 : ((curP + 5) > pages.length) ? pages.length : curP + 5 //4323 + 5 = 4328
-    let slicedPages = pages.slice(curPF, curPL)
+const PaginatorWithArrows: React.FC<PropsType> = ({pages, currentPage, updateCurrentPage}) => {
+
+    let curP: number = currentPage
+    let curPF: number = ((curP - 5) < 0) ? 0 : ((curP + 5) > pages.length) ? pages.length - 10 : curP - 5 //4323 - 5 = 4318
+    let curPL: number = ((curP - 5) < 0) ? 10 : ((curP + 5) > pages.length) ? pages.length : curP + 5 //4323 + 5 = 4328
+    let slicedPages: Array<number> = pages.slice(curPF, curPL)
 
     return(
         <div>

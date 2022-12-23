@@ -2,7 +2,13 @@ import React, {useEffect, useState} from "react";
 import s from './ProfileInfo.module.css'
 import editImg from '../../../assets/images/edit.png'
 
-const StatusWithHooks = (props) => {
+type PropsType = {
+    profileUserStatus : string
+    statusTextChange: (value: string) => void
+    isCurrentUserProfile: boolean
+}
+
+const StatusWithHooks: React.FC<PropsType> = (props) => {
 
     let [editMode, setEditMode] = useState(false)
     let [tempText, setTempText] = useState(props.profileUserStatus)
@@ -19,7 +25,7 @@ const StatusWithHooks = (props) => {
         setEditMode(false)
         props.statusTextChange(tempText)
     }
-    const changeTempTextStatus = (value) => {
+    const changeTempTextStatus = (value: string) => {
         setTempText(value)
     }
 
@@ -27,7 +33,7 @@ const StatusWithHooks = (props) => {
         {!editMode &&
             <div>
                     <span className={props.profileUserStatus ? s.aboutMe : s.aboutMeEmpty}
-                          onClick={props.isCurrentUserProfile && enableEditMode}
+                          onClick={props.isCurrentUserProfile ? enableEditMode : undefined}
                     >{props.profileUserStatus !== null ? props.profileUserStatus !== "" ? props.profileUserStatus : "Input your status" : "No status"}</span>
                 {props.isCurrentUserProfile &&
                     <img onClick={props.isCurrentUserProfile && enableEditMode} className={s.editImg}

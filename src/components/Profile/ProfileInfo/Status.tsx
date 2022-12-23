@@ -2,7 +2,17 @@ import React from "react";
 import s from './ProfileInfo.module.css'
 import editImg from '../../../assets/images/edit.png'
 
-class Status extends React.Component {
+type PropsType = {
+    profileUserStatus : string
+    statusTextChange: (value: string) => void
+    isCurrentUserProfile: boolean
+};
+type StateType = {
+    editMode: boolean; // like this
+    tempText: string
+};
+
+class Status extends React.Component<PropsType, StateType> {
 
     state = {
         editMode: false,
@@ -26,7 +36,7 @@ class Status extends React.Component {
         this.props.statusTextChange(this.state.tempText)
     }
 
-    changeTempTextStatus(value) {
+    changeTempTextStatus(value: string) {
         this.setState({
             tempText: value
         })
@@ -37,7 +47,7 @@ class Status extends React.Component {
             {!this.state.editMode &&
                 <div>
                     <span className={this.props.profileUserStatus ? s.aboutMe : s.aboutMeEmpty}
-                          onClick={this.props.isCurrentUserProfile && this.enableEditMode}
+                          onClick={this.props.isCurrentUserProfile ? this.enableEditMode: undefined}
                     >{this.props.profileUserStatus !== null ? this.props.profileUserStatus !== "" ? this.props.profileUserStatus : "Input your status" : "No status"}</span>
                     {this.props.isCurrentUserProfile &&
                         <img onClick={this.props.isCurrentUserProfile && this.enableEditMode} className={s.editImg}

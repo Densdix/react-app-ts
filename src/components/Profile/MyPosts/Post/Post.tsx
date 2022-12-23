@@ -1,7 +1,13 @@
 import React from "react";
 import s from './Post.module.css'
 
-const Post = ({msg, likesCount, imgUrl}) => {
+type PropsType = {
+    msg: string,
+    likesCount: number,
+    imgUrl: string
+}
+
+const Post: React.FC<PropsType> = ({msg, likesCount, imgUrl}) => {
     //debugger
     return (
         <div className={s.item}>

@@ -1,7 +1,13 @@
 import React from "react";
 import s from "../Users.module.css";
 
-const Paginator = ({pages, currentPage, updateCurrentPage}) => {
+type PropsType = {
+    pages: Array<number>
+    currentPage: number
+    updateCurrentPage: (pageNumber: number) => void
+}
+
+const Paginator: React.FC<PropsType> = ({pages, currentPage, updateCurrentPage}) => {
 
     let curP = currentPage
     let curPF = ((curP - 5) < 0) ? 0 : curP - 5

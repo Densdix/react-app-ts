@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {ChangeEventHandler, useEffect, useState} from "react";
 import s from './ProfileInfo.module.css'
 import noAvatar from "../../../assets/images/noavatar.png";
 import headerBG from "../../../assets/images/Header-Background.jpg"
@@ -6,10 +6,22 @@ import Preloader from "../../common/Preloader/Preloader";
 import Status from "./Status";
 import StatusWithHooks from "./StatusWithHooks";
 import editProfileImg from '../../../assets/images/icons8-переключение-камеры-96.png'
-import {Field, reduxForm} from "redux-form";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {FormControl} from "../../common/FormsControls/FormsControls";
+import {ProfileUserContactsType, ProfileUserDataType} from "../../../redux/profileReducer";
 
-const ProfileInfo = (props) => {
+type PropsType = {
+    profileUsersData: ProfileUserDataType
+    profileUserStatus : string
+    profileEditMode: boolean
+    statusTextChange: (value: string) => void
+    updateProfilePhoto: (filePhoto: any) => void
+    saveProfileData: (profileData: ProfileUserDataType) => void
+    setProfileEditMode: (isEnabled: boolean) => void
+    isCurrentUserProfile: boolean
+}
+
+const ProfileInfo: React.FC<PropsType> = (props) => {
     //console.log(props.profileUsersData.photos.small)
 
     const [isShowingImg, setShowingImg] = useState(false)
@@ -20,14 +32,13 @@ const ProfileInfo = (props) => {
         setEditMode(props.profileEditMode)
     }, [props.profileEditMode])
 
-    const updateProfilePhoto = (e) => {
+    const updateProfilePhoto = (e: React.ChangeEvent<HTMLInputElement>) => {
         if(e.target.files){
-            console.log(e.target.files[0])
             props.updateProfilePhoto(e.target.files[0])
         }
     }
 
-    const onSubmit = (formData) => {
+    const onSubmit = (formData: ProfileUserDataType) => {
         props.saveProfileData(formData)
         setEditMode(props.profileEditMode)
     }
@@ -88,14 +99,13 @@ const ProfileInfo = (props) => {
                             </div>}
                         <br/>
                         <div><b>Contacts</b></div>
-                        <div>{Object.keys(props.profileUsersData.contacts)
+                        <div>{(Object.keys(props.profileUsersData.contacts) as (keyof typeof props.profileUsersData.contacts)[])
                             .map(k => <Contact contactTitle={k}
                                                contactDescription={props.profileUsersData.contacts[k]}/>)}</div>
                     </div>}
                     {editMode &&
-                        <EditProfileInfoForm initialValues={props.profileUsersData}
+                        <ReduxEditProfileInfoForm initialValues={props.profileUsersData}
                                              onSubmit={onSubmit}
-                                             setEditMode={setEditMode}
                                              contacts={props.profileUsersData.contacts}/>
                     }
                     {!editMode
@@ -109,7 +119,11 @@ const ProfileInfo = (props) => {
 
 }
 
-let EditProfileInfoForm = (props) => {
+type ProfileInfoFormOwnPropsType = {
+    contacts: ProfileUserContactsType
+}
+
+let EditProfileInfoForm: React.FC<InjectedFormProps<ProfileUserDataType,ProfileInfoFormOwnPropsType> & ProfileInfoFormOwnPropsType> = (props) => {
     console.log("EditProfileInfoForm", props)
 
     return (
@@ -129,14 +143,26 @@ let EditProfileInfoForm = (props) => {
     )
 }
 
-EditProfileInfoForm = reduxForm({
+const ReduxEditProfileInfoForm = reduxForm<ProfileUserDataType, ProfileInfoFormOwnPropsType>({
         form : "profileInfo"
     // initialValues: {
     //     fullName: "myFirstName"
     // }
 })(EditProfileInfoForm)
 
-const Contact = ({contactTitle, contactDescription}) => {
+export type ProfileInfoFormDataType = {
+    fullName: string
+    aboutMe: string
+    lookingForAJob: boolean
+    lookingForAJobDescription:string
+}
+
+type ContactType = {
+    contactTitle: string
+    contactDescription: string | null
+
+}
+const Contact: React.FC<ContactType> = ({contactTitle, contactDescription}) => {
     return (
         <div><b>{`${contactTitle}`}</b> : {`${contactDescription ? contactDescription : ""}`}</div>
     )

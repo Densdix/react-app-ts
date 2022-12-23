@@ -6,7 +6,9 @@ import reportWebVitals from './reportWebVitals';
 import store from './redux/reactStore';
 import {Provider} from "react-redux";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(
+    document.getElementById('root') as HTMLElement
+);
 
 // setInterval(()=> {
 //     store.dispatch( {type: "FAKE"})

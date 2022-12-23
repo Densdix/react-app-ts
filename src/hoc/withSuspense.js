@@ -1,10 +1,12 @@
 import Preloader from "../components/common/Preloader/Preloader";
 import React, {Suspense} from "react";
 
-const withSuspense = (Component) => {
-    return (
-        <Suspense fallback={<Preloader/>}><Component/></Suspense>
-    )
+
+const withSuspense = (WrappedComponent) => {
+        return <Suspense fallback={<Preloader/>}>
+            <WrappedComponent/>
+        </Suspense>
+
 }
 
 export default withSuspense

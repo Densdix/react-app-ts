@@ -1,36 +1,27 @@
 import React from "react";
 import s from './MyPosts.module.css'
 import Post from "./Post/Post";
-import {Field, reduxForm} from "redux-form";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {FormControl} from "../../common/FormsControls/FormsControls";
 import {emptyField, maxLength} from "../../../utils/validators";
+import {PostDataType} from "../../../redux/profileReducer";
 
-const MyPosts = React.memo(props => {
+type PropsType = {
+    newPostText: string,
+    postData: Array<PostDataType>
+    addPost: (newPostText: string) => void
+}
 
-    let newPostElement = React.createRef();
+const MyPosts: React.FC<PropsType> = React.memo(props => {
 
-    let onSubmit = (value) => {
+    let onSubmit = (value: MyPostsDataType) => {
         //ctrl+shift+v
         props.addPost(value.newPostText)
     }
-
-    let addPost = () => {
-        props.addPost()
-        //props.dispatch(addPostActionCreator())
-    }
-
-    let onPostChange = () => {
-        let text = newPostElement.current.value
-        props.updateNewText(text)
-        //props.dispatch(updateNewPostTextActionCreator(text))
-    }
-
-    console.log("MyPosts")
-
     return (
         <div className={s.postBlock}>
             <h3>My posts</h3>
-            <AddPostForm onSubmit={onSubmit}/>
+            <ReduxAddPostForm onSubmit={onSubmit}/>
             <div className={s.posts}>
                 {props.postData.map(el => <Post msg={el.msg} likesCount={el.likesCount} imgUrl={el.imgUrl}/>)}
             </div>
@@ -42,7 +33,11 @@ const MyPosts = React.memo(props => {
 
 const maxLength15 = maxLength(15)
 
-let AddPostForm = (props) => {
+type MyPostsDataType = {
+    newPostText: string
+}
+
+let AddPostForm: React.FC<InjectedFormProps<MyPostsDataType>> = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div><Field validate={[maxLength15, emptyField]}
@@ -58,7 +53,7 @@ let AddPostForm = (props) => {
     )
 }
 
-AddPostForm = reduxForm({
+const ReduxAddPostForm = reduxForm<MyPostsDataType>({
     // a unique name for the form
     form: 'posts'
 })(AddPostForm)

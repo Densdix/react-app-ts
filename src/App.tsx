@@ -1,7 +1,7 @@
 import React from "react";
 import './App.css';
 import Sidebar from './components/Sidebar/Sidebar';
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 //import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
@@ -12,11 +12,25 @@ import {connect} from "react-redux";
 import {initAppThunkCreator} from "./redux/appReducer";
 import Preloader from "./components/common/Preloader/Preloader";
 import withSuspense from "./hoc/withSuspense";
+import {AppStateType} from "./redux/reactStore";
+import {UserDataType} from "./redux/usersReducer";
 
 const LoginContainer = React.lazy(() => import('./components/Login/Login'));
 const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'));
 
-class App extends Component {
+type StatePropsType = {
+    initialized: boolean
+}
+
+type DispatchPropsType = {
+    initApp: ()=> void
+}
+
+type OwnPropsType = {}
+
+type PropsType = StatePropsType & DispatchPropsType & OwnPropsType
+
+class App extends Component<PropsType> {
 
     componentDidMount() {
         this.props.initApp()
@@ -40,6 +54,10 @@ class App extends Component {
                             <Route path='/users' element={withSuspense(UsersContainer)}/>
                             {/*Lazy load*/}
                             <Route path='/login' element={<React.Suspense fallback={<Preloader/>}><LoginContainer/></React.Suspense>}/>
+                            <Route
+                                path="/"
+                                element={<Navigate to="/profile" replace/>}
+                            />
                         </Routes>
                     </div>
                 </div>
@@ -48,7 +66,7 @@ class App extends Component {
     }
 }
 
-let mapStateToProps = (state) => {
+let mapStateToProps = (state: AppStateType) => {
     return {
         initialized: state.app.initialized
     }

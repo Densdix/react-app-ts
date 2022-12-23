@@ -1,11 +1,11 @@
-const ADD_MESSAGE = "ADD_MESSAGE";
+import {InferActionsTypes} from "./reactStore";
 
-type DialogsDataType = {
+export type DialogsDataType = {
     id: number,
     name: string
 }
 
-type MessageDataType = {
+export type MessageDataType = {
     id: number,
     msg: string
 }
@@ -27,11 +27,12 @@ let initState = {
     newMessageText: ""
 }
 
-export type InitStateType = typeof initState
+type InitStateType = typeof initState
+type ActionType = InferActionsTypes<typeof dialogActionsCreators>
 
-const dialogReducer = (state = initState, action: any): InitStateType => {
+const dialogReducer = (state = initState, action: ActionType): InitStateType => {
     switch (action.type) {
-        case ADD_MESSAGE:
+        case "DIALOG/ADD_MESSAGE":
             return {
                 ...state,
                 // newMessageText: "",
@@ -45,13 +46,10 @@ const dialogReducer = (state = initState, action: any): InitStateType => {
     }
 }
 
-type AddMessageActionType = {
-    type: typeof ADD_MESSAGE
-    value: string
-}
-
-export const addMessageActionCreator = (value: string): AddMessageActionType => {
-    return {type: ADD_MESSAGE, value: value}
+export const dialogActionsCreators = {
+    addMessageActionCreator: (value: string) => {
+        return {type: 'DIALOG/ADD_MESSAGE', value: value} as const
+    }
 }
 
 export default dialogReducer
