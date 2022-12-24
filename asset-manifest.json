@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/react-app-ts/static/css/main.5403a869.css",
+    "main.js": "/react-app-ts/static/js/main.f46dd2d1.js",
+    "static/js/944.337fa822.chunk.js": "/react-app-ts/static/js/944.337fa822.chunk.js",
+    "static/css/968.226e24ce.chunk.css": "/react-app-ts/static/css/968.226e24ce.chunk.css",
+    "static/js/968.c71a3402.chunk.js": "/react-app-ts/static/js/968.c71a3402.chunk.js",
+    "static/js/787.366f7254.chunk.js": "/react-app-ts/static/js/787.366f7254.chunk.js",
+    "static/js/988.7b0cad55.chunk.js": "/react-app-ts/static/js/988.7b0cad55.chunk.js",
+    "static/media/noavatar.png": "/react-app-ts/static/media/noavatar.ba422ca13bb76ae93687.png",
+    "static/media/preloader.svg": "/react-app-ts/static/media/preloader.b146c6e0f89ce1909c40edfb92695011.svg",
+    "index.html": "/react-app-ts/index.html",
+    "main.5403a869.css.map": "/react-app-ts/static/css/main.5403a869.css.map",
+    "main.f46dd2d1.js.map": "/react-app-ts/static/js/main.f46dd2d1.js.map",
+    "944.337fa822.chunk.js.map": "/react-app-ts/static/js/944.337fa822.chunk.js.map",
+    "968.226e24ce.chunk.css.map": "/react-app-ts/static/css/968.226e24ce.chunk.css.map",
+    "968.c71a3402.chunk.js.map": "/react-app-ts/static/js/968.c71a3402.chunk.js.map",
+    "787.366f7254.chunk.js.map": "/react-app-ts/static/js/787.366f7254.chunk.js.map",
+    "988.7b0cad55.chunk.js.map": "/react-app-ts/static/js/988.7b0cad55.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.5403a869.css",
+    "static/js/main.f46dd2d1.js"
+  ]
+}
