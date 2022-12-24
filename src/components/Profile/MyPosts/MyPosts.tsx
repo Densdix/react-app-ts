@@ -20,12 +20,12 @@ const MyPosts: React.FC<PropsType> = React.memo(props => {
     }
     return (
         <div className={s.postBlock}>
-            <h3>My posts</h3>
-            <ReduxAddPostForm onSubmit={onSubmit}/>
+            <h3 className="text-center text-lg">My posts</h3>
+
             <div className={s.posts}>
                 {props.postData.map(el => <Post msg={el.msg} likesCount={el.likesCount} imgUrl={el.imgUrl}/>)}
             </div>
-
+            <ReduxAddPostForm onSubmit={onSubmit}/>
         </div>
     )
 

@@ -4,7 +4,8 @@
 
 .activeTab{
     font-weight: bold;
-    background: white;
+    background: #3b82f6;
+    color: white;
 }
 
 .tab{

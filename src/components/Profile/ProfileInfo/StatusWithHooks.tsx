@@ -31,7 +31,7 @@ const StatusWithHooks: React.FC<PropsType> = (props) => {
 
     return <>
         {!editMode &&
-            <div>
+            <div className="pt-2">
                     <span className={props.profileUserStatus ? s.aboutMe : s.aboutMeEmpty}
                           onClick={props.isCurrentUserProfile ? enableEditMode : undefined}
                     >{props.profileUserStatus !== null ? props.profileUserStatus !== "" ? props.profileUserStatus : "Input your status" : "No status"}</span>
@@ -41,7 +41,7 @@ const StatusWithHooks: React.FC<PropsType> = (props) => {
             </div>
         }
         {editMode &&
-            <div>
+            <div className="pt-2">
                 <input onChange={evt => changeTempTextStatus(evt.target.value)}
                        onKeyDown={evt => evt.code === "Enter" && disableEditMode()}
                        autoFocus={true}

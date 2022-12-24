@@ -127,36 +127,67 @@ const Users: React.FC<PropsType> = () => {
         <PaginatorWithArrows pages={pages}
                              currentPage={currentPage}
                              updateCurrentPage={updateCurrentPage}/>
-        {usersData.map(el => <span>
-                    <span>
-                        <div>
-                            <NavLink to={"/profile/" + el.id}>
-                            <img
-                                className={s.avatar}
-                                src={el.photos.small != null ? el.photos.small : noAvatar}
-                                alt="img"/>
-                            </NavLink>
+        <div className="grid grid-rows-5 grid-flow-col pt-4 sm:grid-rows-1">
+        {usersData.map(el =>
+                <div className="bg-gray-100 flex items-center pb-2">
+                    <div
+                        className="w-48 p-6 bg-white rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all transform duration-500">
+                        <NavLink to={"/profile/" + el.id}><img className="w-40 object-cover rounded-t-md m-auto"
+                                                               src={el.photos.small != null ? el.photos.small : noAvatar} alt=""/></NavLink>
+                        <div className="mt-4">
+                            <h1 className="text-sm font-bold text-gray-700">{el.name}</h1>
+                            <p className="text-xs mt-2 text-gray-700 break-all h-4">{el.status}</p>
+                            <div className="mt-4 mb-2">
+                                {el.followed
+                                ? <button
+                                    className="text-sm block font-semibold py-2 px-6 text-green-100 hover:text-white bg-red-400 rounded-lg shadow hover:shadow-md transition duration-300"
+                                    onClick={() => {unfollowUser(el.id)}}>
+                                        Unfollow
+                                </button>
+                                : <button
+                                        className="text-sm block font-semibold py-2 px-6 text-green-100 hover:text-white bg-green-400 rounded-lg shadow hover:shadow-md transition duration-300"
+                                        onClick={() => {followUser(el.id)}}>
+                                        Follow
+                                    </button>}
+                            </div>
                         </div>
-                        <div>
-                            {el.followed ?
-                                <button disabled={followingElements.some(id => id === el.id)} onClick={() => {
-                                    unfollowUser(el.id)
-                                }}>Unfollow</button>
-
-                                : <button disabled={followingElements.some(id => id === el.id)} onClick={() => {
-                                    followUser(el.id)
-                                }}>Follow</button>}
-                        </div>
-                    </span>
-                    <span>
-                        <span>
-                            <div>{el.name}</div>
-                            <div>{el.status}</div>
-                        </span>
-                    </span>
-                    <br/>
-                </span>)
+                    </div>
+                </div>
+            // <span>
+            //         <span>
+            //             <div>
+            //                 <NavLink to={"/profile/" + el.id}>
+            //                 <img
+            //                     className={s.avatar}
+            //                     src={el.photos.small != null ? el.photos.small : noAvatar}
+            //                     alt="img"/>
+            //                 </NavLink>
+            //             </div>
+            //             <div>
+            //                 {el.followed ?
+            //                     <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 px-2 rounded"
+            //                             disabled={followingElements.some(id => id === el.id)} onClick={() => {
+            //                         unfollowUser(el.id)
+            //                     }}>Unfollow</button>
+            //
+            //                     : <button disabled={followingElements.some(id => id === el.id)} onClick={() => {
+            //                         followUser(el.id)
+            //                     }}>Follow</button>}
+            //             </div>
+            //
+            //         </span>
+            //         <span>
+            //             <span>
+            //                 <div>{el.name}</div>
+            //                 <div>{el.status}</div>
+            //             </span>
+            //         </span>
+            //         <br/>
+            //     </span>
+        )
         }
+        </div>
+
     </div>)
 }
 
@@ -196,7 +227,9 @@ const UserSearchForm: React.FC<IUserSearchForm> = ({getUsers, setFilter}) => {
                         <option value="true">Only followed</option>
                         <option value="false">Only unfollowed</option>
                     </Field>
-                    <button type="submit" disabled={isSubmitting}>
+                    <button
+                        className="ml-1 bg-blue-500 hover:bg-blue-400 text-white font-bold px-1 hover:border-blue-500 rounded"
+                        type="submit" disabled={isSubmitting}>
                         Send (Formik)
                     </button>
                 </Form>
@@ -223,7 +256,7 @@ const UserSearchHookForm: React.FC<IUserSearchForm> = ({getUsers, setFilter}) =>
     }, [filter])
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form className="py-2" onSubmit={handleSubmit(onSubmit)}>
 
             <input defaultValue={filter.term} {...register("term", {maxLength: 255})} type="text"
                    placeholder="Filter users"/>
@@ -233,7 +266,10 @@ const UserSearchHookForm: React.FC<IUserSearchForm> = ({getUsers, setFilter}) =>
                 <option value="true">Only followed</option>
                 <option value="false">Only unfollowed</option>
             </select>
-            <button type="submit">Send (Hook)</button>
+            <button
+                className="ml-1 bg-blue-500 hover:bg-blue-400 text-white font-bold px-1 hover:border-blue-500 rounded"
+                type="submit">Send (Hook)
+            </button>
         </form>
     )
 }
