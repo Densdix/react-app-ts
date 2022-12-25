@@ -1,7 +1,7 @@
 //import LoginContainer from "./components/Login/Login";
 import React, {useEffect, useState} from "react";
 import './App.css';
-import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
+import {BrowserRouter, HashRouter, Navigate, Route, Routes} from "react-router-dom";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 //import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
@@ -48,7 +48,7 @@ export const App = () => {
     if (!initialized) return <Preloader/>
 
     return (
-        <BrowserRouter>
+        <HashRouter>
             {/*<div className="App">*/}
             {/*    <HeaderContainer/>*/}
             {/*    <Sidebar/>*/}
@@ -110,7 +110,7 @@ export const App = () => {
 
 
 
-        </BrowserRouter>
+        </HashRouter>
     );
 }
 
